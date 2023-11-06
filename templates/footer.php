@@ -1,5 +1,6 @@
 </main>
   <footer>
+    <br>
     <!-- place footer here -->
     <center>Copyright @ <?php $Date = date("Y"); echo date("Y")?> Meza Danilo </center>
   </footer>
