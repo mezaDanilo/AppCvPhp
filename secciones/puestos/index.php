@@ -1,3 +1,14 @@
+<?php
+
+include("../../bd.php");
+
+$sentencia = $conexion->prepare("SELECT * FROM tbl_puestos");
+$sentencia->execute();
+$lista_tbl_puestos  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
 <?php include("../../templates/header.php"); ?>
 
 <br>
@@ -19,14 +30,20 @@
                 </tr>
             </thead>
             <tbody>
+
+            <?php foreach($lista_tbl_puestos as $registro){?>
+            
                 <tr class="">
-                    <td scope="row">1</td>
-                    <td>Programador Jr</td>
+                    <td scope="row"><?php echo $registro['id'];?></td>
+                    <td><?php echo $registro['nombredelpuesto'];?></td>
                     <td>
                         <input name="btneditar" id="btneditar" class="btn btn-info" type="button" value="Editar">
                         <input name="btnborrar" id="btnborrar" class="btn btn-danger" type="button" value="Borrar">
                     </td>
                 </tr>
+                
+            <?php } ?>
+
             </tbody>
         </table>
 </div>        
