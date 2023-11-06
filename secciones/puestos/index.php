@@ -2,6 +2,17 @@
 
 include("../../bd.php");
 
+if(isset($_GET["txtId"])){
+
+    $txtID = (isset($_GET["txtId"]))?$_GET["txtId"] :"";
+      //Preparar la eliminacion de los datos
+      $sentencia = $conexion -> prepare("DELETE FROM tbl_puestos WHERE id =:id");
+      
+      $sentencia->bindParam(":id", $txtID);
+      $sentencia -> execute();
+      header("Location: index.php");
+}
+
 $sentencia = $conexion->prepare("SELECT * FROM tbl_puestos");
 $sentencia->execute();
 $lista_tbl_puestos  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
@@ -37,8 +48,9 @@ $lista_tbl_puestos  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
                     <td scope="row"><?php echo $registro['id'];?></td>
                     <td><?php echo $registro['nombredelpuesto'];?></td>
                     <td>
-                        <input name="btneditar" id="btneditar" class="btn btn-info" type="button" value="Editar">
-                        <input name="btnborrar" id="btnborrar" class="btn btn-danger" type="button" value="Borrar">
+                        
+                        <a class="btn btn-success" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
+                        <a class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
                     </td>
                 </tr>
                 
