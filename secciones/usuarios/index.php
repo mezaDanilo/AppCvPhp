@@ -1,3 +1,24 @@
+<?php
+
+include("../../bd.php");
+
+$sentencia = $conexion->prepare("SELECT * FROM tbl_usuarios");
+$sentencia->execute();
+$lista_tbl_usuarios  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
+
+if(isset($_GET["txtId"])){
+
+    $txtID = (isset($_GET["txtId"]))?$_GET["txtId"] :"";
+      //Preparar la eliminacion de los datos
+      $sentencia = $conexion -> prepare("DELETE FROM tbl_usuarios WHERE id =:id");
+      
+      $sentencia->bindParam(":id", $txtID);
+      $sentencia -> execute();
+      header("Location: index.php");
+}
+
+?>
+
 <?php include("../../templates/header.php"); ?>
 
 <br>
@@ -21,16 +42,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="">
-                    <td scope="row">1</td>
-                    <td>Danilo Meza</td>
-                    <td>****</td>
-                    <td>meza@gmail.com</td>
-                    <td>
-                        <input name="btneditar" id="btneditar" class="btn btn-info" type="button" value="Editar">
-                        <input name="btnborrar" id="btnborrar" class="btn btn-danger" type="button" value="Borrar">
-                    </td>
-                </tr>
+                <?php foreach($lista_tbl_usuarios as $registro){?>
+                
+                    <tr class="">
+                        <td scope="row"><?php echo $registro['id'];?></td>
+                        <td><?php echo $registro['usuario'];?></td>
+                        <td><?php echo $registro['password'];?></td>
+                        <td><?php echo $registro['correo'];?></td>
+                        <td>
+                            <a class="btn btn-info" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
+                            <a class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
+                        </td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
 </div>        
