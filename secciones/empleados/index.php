@@ -12,6 +12,8 @@ FROM tbl_empleados");
 $sentencia->execute();
 $lista_tbl_empleados  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
 
+//TRAIGO LOS DATOS PARA MOSTRAR EN EL FORMULARIO
+
 if(isset($_GET["txtId"])){
 
     //BUSCAR EL ARCH RELACIONADO CON EL EMPLEADO
