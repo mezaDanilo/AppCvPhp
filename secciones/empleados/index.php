@@ -14,6 +14,32 @@ $lista_tbl_empleados  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
 
 if(isset($_GET["txtId"])){
 
+    //BUSCAR EL ARCH RELACIONADO CON EL EMPLEADO
+    $txtId = (isset($_GET["txtId"]))?$_GET["txtId"] :"";
+    $sentencia = $conexion->prepare("SELECT foto,cv FROM tbl_empleados WHERE id=:id" );
+    $sentencia->bindParam(":id", $txtId);
+
+    $sentencia->execute();
+    //FETCH LAZY TRAE SOLO UN REGISTRO
+    $registro_recuperado  = $sentencia -> fetch(PDO::FETCH_LAZY);
+
+        print_r($registro_recuperado);
+    
+        if(isset($registro_recuperado["foto"]) && $registro_recuperado["foto"] != "")
+        {
+            if(file_exists("./".$registro_recuperado["foto"])){
+                unlink("./".$registro_recuperado["foto"]);
+            }
+        }
+
+        if(isset($registro_recuperado["cv"]) && $registro_recuperado["cv"] != "")
+        {
+            if(file_exists("./".$registro_recuperado["cv"])){
+                unlink("./".$registro_recuperado["cv"]);
+            }
+        }
+
+
     $txtID = (isset($_GET["txtId"]))?$_GET["txtId"] :"";
       //Preparar la eliminacion de los datos
       $sentencia = $conexion -> prepare("DELETE FROM tbl_empleados WHERE id =:id");
@@ -21,6 +47,7 @@ if(isset($_GET["txtId"])){
       $sentencia->bindParam(":id", $txtID);
       $sentencia -> execute();
       header("Location: index.php");
+      
 }
 ?>
 
