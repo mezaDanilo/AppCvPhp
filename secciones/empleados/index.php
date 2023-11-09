@@ -1,3 +1,30 @@
+<?php
+
+include("../../bd.php");
+
+$sentencia = $conexion->prepare("SELECT *,
+#subconsulta para sacar el valor del puesto
+(SELECT nombredelpuesto 
+FROM tbl_puestos 
+WHERE tbl_puestos.id=tbl_empleados.idpuesto limit 1) as puesto
+
+FROM tbl_empleados");
+$sentencia->execute();
+$lista_tbl_empleados  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
+
+if(isset($_GET["txtId"])){
+
+    $txtID = (isset($_GET["txtId"]))?$_GET["txtId"] :"";
+      //Preparar la eliminacion de los datos
+      $sentencia = $conexion -> prepare("DELETE FROM tbl_empleados WHERE id =:id");
+      
+      $sentencia->bindParam(":id", $txtID);
+      $sentencia -> execute();
+      header("Location: index.php");
+}
+?>
+
+
 <?php include("../../templates/header.php"); ?>
 
 <br>
@@ -7,11 +34,13 @@
         href="crear.php" role="button">
         Agregar registro</a>
     </div>
+    
     <div class="card-body">
-        <div class="table-responsive-sm">
+        <div class="table">
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">Id</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Foto</th>
                         <th scope="col">CV</th>
@@ -21,18 +50,28 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($lista_tbl_empleados as $registro){?>
                     <tr class="">
-                        <td scope="row">Danilo Meza</td>
-                        <td>imagen.jpg</td>
-                        <td>CV.pdf</td>
-                        <td>Programdor Sr.</td>
-                        <td>12/12/2020</td>
+                        <td scope="row"><?php echo $registro['id'];?></td>
+                        <td><?php echo $registro['nombres']; echo " ".$registro['apellidos'];?></td>      
+
+                        <td>
+                            <img width="50"
+                             src="<?php echo $registro['foto'];?>"
+                              class="img-fluid rounded" alt="">                            
+                        </td>
+
+                        <td><?php echo $registro['cv'];?></td>
+
+                        <td><?php echo $registro['puesto'];?></td>
+                        <td><?php echo $registro['fechadeingreso'];?></td>
                         <td>
                             <a name="" id="" class="btn btn-success" href="#" role="button">Carta</a>
-                            <a name="" id="" class="btn btn-info" href="#" role="button">Editar</a>
-                            <a name="" id="" class="btn btn-danger" href="#" role="button">Eliminar</a>
+                            <a name="" id="" class="btn btn-info" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
+                            <a name="" id="" class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
                         </td>
                     </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
