@@ -87,10 +87,16 @@ if(isset($_GET["txtId"])){
                         <td>
                             <img width="50"
                              src="<?php echo $registro['foto'];?>"
-                              class="img-fluid rounded" alt="">                            
+                              class="img-fluid rounded" alt="">   
+                                                       
                         </td>
 
-                        <td><?php echo $registro['cv'];?></td>
+                        <td>
+                            
+                            
+                            <a href="<?php echo $registro['cv'];?>" target="new_tab"><?php echo $registro['cv'];?></a>
+              
+                        </td>
 
                         <td><?php echo $registro['puesto'];?></td>
                         <td><?php echo $registro['fechadeingreso'];?></td>
