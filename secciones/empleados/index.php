@@ -66,7 +66,7 @@ if(isset($_GET["txtId"])){
     
     <div class="card-body">
         <div class="table">
-            <table class="table">
+            <table class="table" id="tabla_id">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>

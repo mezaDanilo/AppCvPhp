@@ -31,7 +31,7 @@ if(isset($_GET["txtId"])){
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
-        <table class="table">
+        <table class="table"  id="tabla_id">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
