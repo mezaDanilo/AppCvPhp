@@ -101,7 +101,7 @@ if(isset($_GET["txtId"])){
                         <td><?php echo $registro['puesto'];?></td>
                         <td><?php echo $registro['fechadeingreso'];?></td>
                         <td>
-                            <a name="" id="" class="btn btn-success" href="#" role="button">Carta</a>
+                            <a name="" id="" class="btn btn-success" href="carta_recomendacion.php?txtId=<?php echo $registro['id'];?>"  role="button">Carta</a>
                             <a name="" id="" class="btn btn-info" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
                             <a name="" id="" class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
                         </td>
