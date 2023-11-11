@@ -16,7 +16,7 @@ if (isset($_GET["txtId"])) {
     // Obtiene los datos del empleado
     $registro = $sentencia->fetch(PDO::FETCH_LAZY);
 
-    print_r($registro);
+//    print_r($registro);
 
     // Almacena los datos en variables
     $nombre = $registro["nombres"];
@@ -33,9 +33,9 @@ if (isset($_GET["txtId"])) {
 
     $fechaInicio = new DateTime($fechadeingreso);
     $fechaFin = new DateTime(date('Y-m-d'));
-    $diferencia = date_diff($fechaInicio,$fechaFin);
-
+    $diferencia = date_diff($fechaInicio,$fechaFin);       
 }
+ob_start();
 
 ?>
 
@@ -49,7 +49,7 @@ if (isset($_GET["txtId"])) {
 <body>
     <h1>Carta de Recomendación Laboral</h1>
     <br><br>
-    Buenos Aires, Argentina <strong>11/11/2023</strong>
+    Buenos Aires, Argentina <strong><?php echo date('d M Y'); ?></strong>
     <br><br>
     A quien pueda interesar:
     <br><br>
@@ -65,8 +65,23 @@ if (isset($_GET["txtId"])) {
     <br><br>
     Sin más nada a que referirme  y, esperando que esta misiva sea tomada en cuenta, dejo mi número de contacto para cualquiera información de interés.
     <br><br><br><br><br><br>
+    ____________________<br>
     Atentamente,
     <br>
     Analista de Sistemas Meza Danilo
     </body>
 </html>
+
+<?php 
+$HTML = ob_get_clean();
+require_once("../../libs/autoload.inc.php");
+use Dompdf\Dompdf;
+$dompdf = new Dompdf();
+$opciones = $dompdf->getOptions();
+$opciones ->set(array("isRemoteEnabled" => true));
+$dompdf -> setOptions($opciones);
+$dompdf -> loadHTML($HTML);
+$dompdf -> setPaper('letter');
+$dompdf -> render();
+$dompdf -> stream("archivo.pdf", array("Attachment" => false));
+?>
