@@ -116,7 +116,9 @@ if ($_POST) {
     }
 
     // Redirecciona a la página principal (debe descomentarse para redireccionar)
-    header("Location: index.php");
+    $mensaje = "Registro editado";
+    header("Location: index.php?mensaje=".$mensaje);
+
 }
 ?>
 

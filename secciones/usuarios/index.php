@@ -14,7 +14,9 @@ if(isset($_GET["txtId"])){
       
       $sentencia->bindParam(":id", $txtID);
       $sentencia -> execute();
-      header("Location: index.php");
+      $mensaje = "Registro eliminado";
+      header("Location: index.php?mensaje=".$mensaje);
+  
 }
 
 ?>
@@ -51,7 +53,7 @@ if(isset($_GET["txtId"])){
                         <td><?php echo $registro['correo'];?></td>
                         <td>
                             <a class="btn btn-info" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
-                            <a class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
+                            <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id'];?>)" role="button">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>

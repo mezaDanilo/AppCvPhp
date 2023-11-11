@@ -22,6 +22,10 @@ $url_base = "http://localhost/app-web/";
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 </head>
 <body>
   <header>
@@ -48,3 +52,9 @@ $url_base = "http://localhost/app-web/";
     </nav>
   </header>
   <main class="container">
+  <?php
+if(isset($_GET["mensaje"])){ ?>
+<script>
+        Swal.fire({icon:"success", title:"<?php echo $_GET['mensaje'];?>"});
+</script>
+<?php }?>

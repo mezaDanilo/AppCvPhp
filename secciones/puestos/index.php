@@ -10,7 +10,8 @@ if(isset($_GET["txtId"])){
       
       $sentencia->bindParam(":id", $txtID);
       $sentencia -> execute();
-      header("Location: index.php");
+      $mensaje = "Registro eliminado";
+      header("Location: index.php?mensaje=".$mensaje);
 }
 
 $sentencia = $conexion->prepare("SELECT * FROM tbl_puestos");
@@ -21,6 +22,7 @@ $lista_tbl_puestos  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include("../../templates/header.php"); ?>
+
 
 <br>
 
@@ -50,7 +52,7 @@ $lista_tbl_puestos  = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
                     <td>
                         
                         <a class="btn btn-success" href="editar.php?txtId=<?php echo $registro['id'];?>" role="button">Editar</a>
-                        <a class="btn btn-danger" href="index.php?txtId=<?php echo $registro['id'];?>" role="button">Eliminar</a>
+                        <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id'];?>)" role="button">Eliminar</a>
                     </td>
                 </tr>
                 

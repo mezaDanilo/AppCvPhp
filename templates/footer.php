@@ -28,6 +28,28 @@
 
 });
   </script>
+  <script>
+    function borrar(id){
+        //index.php?txtId=
+        Swal.fire({
+        title: "¿Deseas borrar el registro?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Si, borrar",
+        
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            window.location = "index.php?txtId="+id;
+            Swal.fire("Guardado!", "", "Éxito");
+        } else if (result.isDenied) {
+            Swal.fire("Cambios no guardados", "", "info");
+        }
+        });
+    }
+
+</script>
+
 </body>
 
 </html>

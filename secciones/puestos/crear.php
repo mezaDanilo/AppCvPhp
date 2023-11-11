@@ -13,7 +13,8 @@ if($_POST){
     //Asignando los valores que vienen del método POST (los que vienen del formulario)
     $sentencia -> bindParam(":nombredelpuesto", $nombredelpuesto);
     $sentencia -> execute(); 
-    header("Location:index.php");
+    $mensaje = "Registro agregado";
+    header("Location: index.php?mensaje=".$mensaje);
 
 
 }
